@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:ip_banking_mobile/features/authentication/firebase_methods.dart';
-import 'package:ip_banking_mobile/utilities/constants.dart';
-import 'package:ip_banking_mobile/utilities/widget/custom_textfield.dart';
+import 'package:ing_mobile/features/authentication/firebase_methods.dart';
+import 'package:ing_mobile/utilities/constants.dart';
+import 'package:ing_mobile/utilities/widget/custom_textfield.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);

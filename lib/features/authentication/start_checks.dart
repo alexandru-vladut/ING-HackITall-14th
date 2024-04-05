@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ip_banking_mobile/features/authentication/screens/enter_pin.dart';
-import 'package:ip_banking_mobile/features/authentication/screens/login.dart';
+import 'package:ing_mobile/features/authentication/screens/enter_pin.dart';
+import 'package:ing_mobile/features/authentication/screens/login.dart';
 
 class CheckLoginStatus extends StatelessWidget {
   const CheckLoginStatus({super.key});

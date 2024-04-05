@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:ip_banking_mobile/features/authentication/screens/login_utils/theme.dart';
+import 'package:ing_mobile/features/authentication/screens/login_utils/theme.dart';
 
 class BubbleIndicatorPainter extends CustomPainter {
   BubbleIndicatorPainter(

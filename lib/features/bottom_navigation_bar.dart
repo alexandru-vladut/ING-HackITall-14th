@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ip_banking_mobile/features/test_page.dart';
+import 'package:ing_mobile/features/test_page.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);

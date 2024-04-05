@@ -4,13 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:ip_banking_mobile/features/authentication/screens/enter_pin.dart';
-import 'package:ip_banking_mobile/features/authentication/screens/landing_pages/forget_email_sent.dart';
-import 'package:ip_banking_mobile/features/authentication/screens/landing_pages/verification_email_sent.dart';
-import 'package:ip_banking_mobile/features/authentication/screens/create_pin.dart';
-import 'package:ip_banking_mobile/features/bottom_navigation_bar.dart';
-import 'package:ip_banking_mobile/utilities/animation/slideright_toleft.dart';
-import 'package:ip_banking_mobile/utilities/constants.dart';
+import 'package:ing_mobile/features/authentication/screens/enter_pin.dart';
+import 'package:ing_mobile/features/authentication/screens/landing_pages/forget_email_sent.dart';
+import 'package:ing_mobile/features/authentication/screens/landing_pages/verification_email_sent.dart';
+import 'package:ing_mobile/features/authentication/screens/create_pin.dart';
+import 'package:ing_mobile/features/bottom_navigation_bar.dart';
+import 'package:ing_mobile/utilities/animation/slideright_toleft.dart';
+import 'package:ing_mobile/utilities/constants.dart';
 
 void signUserIn(BuildContext context, String email, String password) async {
 

@@ -1,8 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:ip_banking_mobile/features/authentication/firebase_methods.dart';
-import 'package:ip_banking_mobile/utilities/constants.dart';
+import 'package:ing_mobile/features/authentication/firebase_methods.dart';
+import 'package:ing_mobile/utilities/constants.dart';
 
 class CreatePin extends StatefulWidget {
 

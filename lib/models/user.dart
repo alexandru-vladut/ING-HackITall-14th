@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ip_banking_mobile/models/card.dart';
-import 'package:ip_banking_mobile/models/transaction.dart';
+import 'package:ing_mobile/models/card.dart';
+import 'package:ing_mobile/models/transaction.dart';
 
 class UserModel {
   

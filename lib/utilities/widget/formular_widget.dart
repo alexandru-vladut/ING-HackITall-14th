@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ip_banking_mobile/utilities/widget/custom_text.dart';
+import 'package:ing_mobile/utilities/widget/custom_text.dart';
 
 class FormulerWidget extends StatelessWidget {
   const FormulerWidget({super.key, 

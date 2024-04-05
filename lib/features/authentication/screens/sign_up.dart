@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:ip_banking_mobile/features/authentication/firebase_methods.dart';
+import 'package:ing_mobile/features/authentication/firebase_methods.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
