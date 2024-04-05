@@ -6,6 +6,9 @@ import 'package:logger/logger.dart';
 
 
 String appName = 'ing-mobile';
+bool emailVerificationEnabled = false;
+bool pinEnabled = false;
+
 const Color mainColor = Color(0xFF000089);
 
 var logger = Logger(printer: PrettyPrinter(),);

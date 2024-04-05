@@ -144,7 +144,13 @@ class SignInState extends State<SignIn> {
                             },
                             onFieldSubmitted: (_) {
                               if (_formKey.currentState!.validate()) {
-                                signUserIn(context, loginEmailController.text, loginPasswordController.text);
+                                if (emailVerificationEnabled) {
+                                  signUserIn(context, loginEmailController.text, loginPasswordController.text);
+                                } else if (pinEnabled) {
+                                  signUserInWithoutEmailVerification(context, loginEmailController.text, loginPasswordController.text);
+                                } else {
+                                  signUserInWithoutEmailVerificationAndPin(context, loginEmailController.text, loginPasswordController.text);
+                                }
                               } else {
                                 setState(() {
                                   containerHeight = 190;
@@ -178,7 +184,13 @@ class SignInState extends State<SignIn> {
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        signUserIn(context, loginEmailController.text, loginPasswordController.text);
+                        if (emailVerificationEnabled) {
+                          signUserIn(context, loginEmailController.text, loginPasswordController.text);
+                        } else if (pinEnabled) {
+                          signUserInWithoutEmailVerification(context, loginEmailController.text, loginPasswordController.text);
+                        } else {
+                          signUserInWithoutEmailVerificationAndPin(context, loginEmailController.text, loginPasswordController.text);
+                        }
                       } else {
                         setState(() {
                           containerHeight = 190;
