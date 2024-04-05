@@ -9,8 +9,10 @@ import 'package:ing_mobile/features/authentication/screens/landing_pages/forget_
 import 'package:ing_mobile/features/authentication/screens/landing_pages/verification_email_sent.dart';
 import 'package:ing_mobile/features/authentication/screens/create_pin.dart';
 import 'package:ing_mobile/features/bottom_navigation_bar.dart';
+import 'package:ing_mobile/models/user.dart';
 import 'package:ing_mobile/utilities/animation/slideright_toleft.dart';
-import 'package:ing_mobile/utilities/constants.dart';
+import 'package:ing_mobile/configs/firebase_config.dart';
+import 'package:ing_mobile/configs/constants.dart';
 
 void signUserIn(BuildContext context, String email, String password) async {
 
@@ -32,9 +34,9 @@ void signUserIn(BuildContext context, String email, String password) async {
 
       if (user.emailVerified) {
         
-        final userCollection = await FirebaseFirestore.instance.collection('users').where('uid', isEqualTo: user.uid).get();
+        final userCollection = await FirebaseFirestore.instance.collection(usersCollection).where(FirebaseUser.uid, isEqualTo: user.uid).get();
         final userDoc = userCollection.docs[0];
-        String? userPin = userDoc.get('pin');
+        String? userPin = userDoc.get(FirebaseUser.pin);
 
         FirebaseAuth.instance.signOut();
 
@@ -78,9 +80,9 @@ Future<bool?> userInFirestoreCollection(String email) async {
 
   try {
 
-    final snapshot = await FirebaseFirestore.instance.collection('users').get();
+    final snapshot = await FirebaseFirestore.instance.collection(usersCollection).get();
     for (var doc in snapshot.docs) {
-      if (doc.data()['email'].toString() == email) {
+      if (doc.data()[FirebaseUser.email].toString() == email) {
         return true;
       }
     }
@@ -121,18 +123,18 @@ void signUserUp(BuildContext context, String inputEmail, String inputName, Strin
           email: inputEmail,
           password: inputPassword
         );
-    
-        await FirebaseFirestore.instance.collection('users').add({
-          'uid': FirebaseAuth.instance.currentUser!.uid.toString(),
-          'name': inputName,
-          'email': inputEmail,
-          'pin': null,
-          'creditCard': null,
-          'ecoCard': null,
-          'transactions': [],
-        });
 
         User user = userCredential.user!;
+
+        UserModel newUser = UserModel(
+          uid: user.uid.toString(),
+          name: inputName,
+          email: inputEmail,
+          pin: null,
+        );
+    
+        await FirebaseFirestore.instance.collection(usersCollection).add(newUser.toMap());
+
         await user.updateDisplayName(inputName);
         await user.reload();
 
@@ -166,10 +168,10 @@ Future<void> createPinCode(BuildContext context, String email, String password, 
 
   loadingDialog(context);
               
-  final querySnapshot = await FirebaseFirestore.instance.collection('users').where('email', isEqualTo: email).get();
+  final querySnapshot = await FirebaseFirestore.instance.collection(usersCollection).where(FirebaseUser.email, isEqualTo: email).get();
   final queryDocumentSnapshots = querySnapshot.docs;
   await queryDocumentSnapshots.first.reference.update({
-    'pin': pin,
+    FirebaseUser.pin: pin,
   });
   await FirebaseAuth.instance.signInWithEmailAndPassword(
     email: email,
@@ -181,9 +183,9 @@ Future<void> createPinCode(BuildContext context, String email, String password, 
 
 Future<String> getUserPin({required String identifier, required String value}) async {
 
-  final querySnapshot = await FirebaseFirestore.instance.collection('users').where(identifier, isEqualTo: value).get();
+  final querySnapshot = await FirebaseFirestore.instance.collection(usersCollection).where(identifier, isEqualTo: value).get();
   final queryDocumentSnapshot = querySnapshot.docs[0];
-  String userPin = queryDocumentSnapshot.get('pin');
+  String userPin = queryDocumentSnapshot.get(FirebaseUser.pin);
 
   return userPin;
 }

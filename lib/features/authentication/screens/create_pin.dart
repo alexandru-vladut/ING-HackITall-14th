@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:ing_mobile/features/authentication/firebase_methods.dart';
-import 'package:ing_mobile/utilities/constants.dart';
+import 'package:ing_mobile/configs/constants.dart';
 
 class CreatePin extends StatefulWidget {
 

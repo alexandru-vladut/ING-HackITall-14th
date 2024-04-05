@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ing_mobile/models/card.dart';
-import 'package:ing_mobile/models/transaction.dart';
+import 'package:ing_mobile/configs/firebase_config.dart';
+// import 'package:ing_mobile/models/card.dart';
+// import 'package:ing_mobile/models/transaction.dart';
 
 class UserModel {
   
@@ -9,9 +10,9 @@ class UserModel {
   final String name; // never null, initialized on register
   final String email; // never null, initialized on register
   final String? pin; // may be null, initialized with null on register
-  final CardModel? creditCard; // may be null, initialized with null on register
-  final CardModel? ecoCard; // may be null, initialized with null on register
-  final List<TransactionModel> transactions; // never null, initialized with [] (empty list) on register
+  // final CardModel? creditCard; // may be null, initialized with null on register
+  // final CardModel? ecoCard; // may be null, initialized with null on register
+  // final List<TransactionModel> transactions; // never null, initialized with [] (empty list) on register
   
   UserModel({
     this.docId,
@@ -19,20 +20,20 @@ class UserModel {
     required this.name,
     required this.email,
     this.pin,
-    this.creditCard,
-    this.ecoCard,
-    required this.transactions
+    // this.creditCard,
+    // this.ecoCard,
+    // required this.transactions
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'uid': uid,
-      'name': name,
-      'email': email,
-      'pin': pin,
-      'creditCard': (creditCard != null) ? creditCard!.toMap() : null,
-      'ecoCard': (ecoCard != null) ? ecoCard!.toMap() : null,
-      'transactions': transactions.map((e) => e.toMap()).toList()
+      FirebaseUser.uid: uid,
+      FirebaseUser.name: name,
+      FirebaseUser.email: email,
+      FirebaseUser.pin: pin,
+      // 'creditCard': (creditCard != null) ? creditCard!.toMap() : null,
+      // 'ecoCard': (ecoCard != null) ? ecoCard!.toMap() : null,
+      // 'transactions': transactions.map((e) => e.toMap()).toList()
     };
   }
 
@@ -42,13 +43,13 @@ class UserModel {
 
     return UserModel(
       docId: doc.id,
-      uid: data['uid'],
-      name: data['name'],
-      email: data['email'],
-      pin: data['pin'],
-      creditCard: CardModel.fromMap(data['creditCard']),
-      ecoCard: CardModel.fromMap(data['ecoCard']),
-      transactions: (data['transactions'] as List<Map<String, dynamic>>).map((e) => TransactionModel.fromMap(e)).toList()
+      uid: data[FirebaseUser.uid],
+      name: data[FirebaseUser.name],
+      email: data[FirebaseUser.email],
+      pin: data[FirebaseUser.pin],
+      // creditCard: CardModel.fromMap(data['creditCard']),
+      // ecoCard: CardModel.fromMap(data['ecoCard']),
+      // transactions: (data['transactions'] as List<Map<String, dynamic>>).map((e) => TransactionModel.fromMap(e)).toList()
     );
   }
 }

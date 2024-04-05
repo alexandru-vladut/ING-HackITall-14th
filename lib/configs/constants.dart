@@ -4,7 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
-String appName = 'IP-Banking';
+
+String appName = 'ing-mobile';
 const Color mainColor = Color(0xFF000089);
 
 var logger = Logger(printer: PrettyPrinter(),);

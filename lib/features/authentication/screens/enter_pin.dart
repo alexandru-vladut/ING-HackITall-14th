@@ -6,7 +6,7 @@ import 'package:ing_mobile/features/authentication/firebase_methods.dart';
 import 'package:ing_mobile/features/authentication/screens/landing_pages/wrong_pin.dart';
 import 'package:ing_mobile/features/bottom_navigation_bar.dart';
 import 'package:ing_mobile/utilities/animation/slideright_toleft.dart';
-import 'package:ing_mobile/utilities/constants.dart';
+import 'package:ing_mobile/configs/constants.dart';
 
 class EnterPin extends StatefulWidget {
 

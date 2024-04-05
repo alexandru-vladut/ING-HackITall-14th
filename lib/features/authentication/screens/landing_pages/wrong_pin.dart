@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ing_mobile/features/authentication/screens/login.dart';
 import 'package:ing_mobile/utilities/animation/slideright_toleft.dart';
-import 'package:ing_mobile/utilities/constants.dart';
+import 'package:ing_mobile/configs/constants.dart';
 
 class WrongPin extends StatelessWidget {
 
