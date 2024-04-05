@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1052911699601",
+    "project_id": "hackitall2024-ing",
+    "storage_bucket": "hackitall2024-ing.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052911699601:android:318a48f7b124684b152130",
+        "android_client_info": {
+          "package_name": "com.example.ing_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQkuubaF6JoxnmFa8Ql0I6kCx1IXrWkiw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
