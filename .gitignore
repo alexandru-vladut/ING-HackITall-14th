@@ -30,3 +30,4 @@ doc/api/
 .gitattributes
 .metadata
 .idea/
+.vscode/
