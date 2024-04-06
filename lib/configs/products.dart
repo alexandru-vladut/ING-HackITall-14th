@@ -1,8 +1,9 @@
 Map<String, Map<String, dynamic>> products = {
     '59489184': {
-      'name': 'Pack of Heets',
+      'name': 'Terea Wind Fuse',
+      'imagePath': 'assets/images/terea_crop.png',
       'redgreen': 'red',
-      'paper': 0.05,
+      'paper': 0.005,
       'foil': 0,
       'plastic': 0,
       'tobacco': 0,
@@ -14,7 +15,8 @@ Map<String, Map<String, dynamic>> products = {
     },
 
     '5948918': {
-      'name': 'Coca Cola Bottle',
+      'name': 'Coca-Cola Bottle',
+      'imagePath': 'assets/images/coca-cola.png',
       'redgreen': 'green',
       'paper': 0.05,
       'foil': 0.05,
