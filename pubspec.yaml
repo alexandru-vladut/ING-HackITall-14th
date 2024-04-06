@@ -78,6 +78,7 @@ flutter:
     - assets/memoji/
     - assets/vendor_logos/
     - assets/env/
+    - assets/fitness_app/
 
   fonts:
     - family: DMSans

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ing_mobile/features/activities/log_activity.dart';
 import 'package:ing_mobile/features/home_page.dart';
+import 'package:ing_mobile/features/new_home_page/new_home_page.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -9,16 +10,44 @@ class BottomNavBar extends StatefulWidget {
   State<BottomNavBar> createState() => _BottomNavBarState();
 }
 
-class _BottomNavBarState extends State<BottomNavBar> {
+class _BottomNavBarState extends State<BottomNavBar> with TickerProviderStateMixin {
 
   int _selectedIndex = 0;
 
-  static final List<Widget> _widgetOptions = <Widget>[
-    const HomePage(),
-    const LogActivityPage(),
-    const HomePage(),
-    const HomePage()
-  ];
+  List<Widget> widgetOptions = [];
+
+  AnimationController? animationController;
+
+  @override
+  void initState() {
+
+    animationController = AnimationController(
+        duration: const Duration(milliseconds: 600), vsync: this);
+
+    setState(() {
+      widgetOptions = <Widget>[
+        const HomePage(),
+        const LogActivityPage(),
+        MyDiaryScreen(animationController: animationController),
+        const HomePage()
+      ];
+    });
+    
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    animationController?.dispose();
+    super.dispose();
+  }
+
+  // static final List<Widget> _widgetOptions = <Widget>[
+  //   const HomePage(),
+  //   const LogActivityPage(),
+  //   MyDiaryScreen(animationController: animationController),
+  //   const HomePage()
+  // ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -30,7 +59,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white, // Repository.navbarColor(context),
