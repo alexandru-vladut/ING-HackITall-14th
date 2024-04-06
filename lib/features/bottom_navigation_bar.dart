@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ing_mobile/features/test_page.dart';
+import 'package:ing_mobile/features/activities/log_activity.dart';
+import 'package:ing_mobile/features/home_page.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -13,14 +14,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    // const Home(),
-    // const PosPay(),
-    // const TransactionList(),
-    // const Profile(),
-    const TestPage(),
-    const TestPage(),
-    const TestPage(),
-    const TestPage()
+    const HomePage(),
+    const LogActivityPage(),
+    const HomePage(),
+    const HomePage()
   ];
 
   void _onItemTapped(int index) {
