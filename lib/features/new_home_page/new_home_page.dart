@@ -98,46 +98,28 @@ class _MyDiaryScreenState extends State<MyDiaryScreen> with TickerProviderStateM
 
   }
 
-  Future<bool> getData() async {
-    await Future<dynamic>.delayed(const Duration(milliseconds: 50));
-    return true;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
       color: FitnessAppTheme.background,
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: getMainListViewUI(),
+        body: ListView.builder(
+        controller: scrollController,
+        padding: EdgeInsets.only(
+          top: AppBar().preferredSize.height +
+              MediaQuery.of(context).padding.top +
+              24,
+          bottom: 62 + MediaQuery.of(context).padding.bottom,
+        ),
+        itemCount: listViews.length,
+        scrollDirection: Axis.vertical,
+        itemBuilder: (BuildContext context, int index) {
+          widget.animationController?.forward();
+          return listViews[index];
+        },
       ),
-    );
-  }
-
-  Widget getMainListViewUI() {
-    return FutureBuilder<bool>(
-      future: getData(),
-      builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-        if (!snapshot.hasData) {
-          return const SizedBox();
-        } else {
-          return ListView.builder(
-            controller: scrollController,
-            padding: EdgeInsets.only(
-              top: AppBar().preferredSize.height +
-                  MediaQuery.of(context).padding.top +
-                  24,
-              bottom: 62 + MediaQuery.of(context).padding.bottom,
-            ),
-            itemCount: listViews.length,
-            scrollDirection: Axis.vertical,
-            itemBuilder: (BuildContext context, int index) {
-              widget.animationController?.forward();
-              return listViews[index];
-            },
-          );
-        }
-      },
+      ),
     );
   }
 
