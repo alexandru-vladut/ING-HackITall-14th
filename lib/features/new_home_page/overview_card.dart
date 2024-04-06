@@ -3,28 +3,35 @@ import 'package:ing_mobile/configs/constants.dart';
 import 'dart:math' as math;
 
 import 'package:ing_mobile/features/new_home_page/fitness_app_theme.dart';
+import 'package:ing_mobile/models/user.dart';
 
-class MediterranesnDietView extends StatelessWidget {
+class OverviewCard extends StatelessWidget {
   final AnimationController? animationController;
   final Animation<double>? animation;
+  final int thisMonthPoints;
+  final int userRank;
+  final UserModel? userData;
 
-  const MediterranesnDietView(
-      {Key? key, this.animationController, this.animation})
+  const OverviewCard(
+      {Key? key, this.animationController, this.animation, required this.thisMonthPoints, this.userData, required this.userRank})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    DateTime now = DateTime.now();
+    DateTime lastDayOfMonth = DateTime(now.year, now.month + 1, 0);
+    Duration timeLeft = lastDayOfMonth.difference(now);
+
     return AnimatedBuilder(
       animation: animationController!,
       builder: (BuildContext context, Widget? child) {
         return FadeTransition(
           opacity: animation!,
           child: Transform(
-            transform: Matrix4.translationValues(
-                0.0, 30 * (1.0 - animation!.value), 0.0),
+            transform: Matrix4.translationValues(0.0, 30 * (1.0 - animation!.value), 0.0),
             child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 24, right: 24, top: 16, bottom: 18),
+              padding: const EdgeInsets.only(left: 24, right: 24, top: 16, bottom: 18),
               child: Container(
                 decoration: BoxDecoration(
                   color: FitnessAppTheme.white,
@@ -43,14 +50,12 @@ class MediterranesnDietView extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Padding(
-                      padding:
-                          const EdgeInsets.only(top: 16, left: 16, right: 16),
+                      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
                       child: Row(
                         children: <Widget>[
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 8, right: 8, top: 4),
+                              padding: const EdgeInsets.only(left: 8, right: 8, top: 4),
                               child: Column(
                                 children: <Widget>[
                                   Row(
@@ -68,16 +73,13 @@ class MediterranesnDietView extends StatelessWidget {
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 4, bottom: 2),
+                                              padding: const EdgeInsets.only(left: 4, bottom: 2),
                                               child: Text(
-                                                'Eaten',
+                                                'This Month',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontFamily:
@@ -91,23 +93,18 @@ class MediterranesnDietView extends StatelessWidget {
                                               ),
                                             ),
                                             Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.end,
                                               children: <Widget>[
                                                 SizedBox(
                                                   width: 28,
                                                   height: 28,
-                                                  child: Image.asset(
-                                                      "assets/fitness_app/eaten.png"),
+                                                  child: Image.asset("assets/fitness_app/eaten.png"),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 4, bottom: 3),
+                                                  padding: const EdgeInsets.only(left: 4, bottom: 3),
                                                   child: Text(
-                                                    '${(1127 * animation!.value).toInt()}',
+                                                    (thisMonthPoints != -1) ? thisMonthPoints.toString() : '',
                                                     textAlign: TextAlign.center,
                                                     style: const TextStyle(
                                                       fontFamily:
@@ -122,11 +119,9 @@ class MediterranesnDietView extends StatelessWidget {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 4, bottom: 3),
+                                                  padding: const EdgeInsets.only(left: 4, bottom: 3),
                                                   child: Text(
-                                                    'Kcal',
+                                                    'Points',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       fontFamily:
@@ -176,7 +171,7 @@ class MediterranesnDietView extends StatelessWidget {
                                               padding: const EdgeInsets.only(
                                                   left: 4, bottom: 2),
                                               child: Text(
-                                                'Burned',
+                                                'All-Time',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontFamily:
@@ -206,7 +201,7 @@ class MediterranesnDietView extends StatelessWidget {
                                                       const EdgeInsets.only(
                                                           left: 4, bottom: 3),
                                                   child: Text(
-                                                    '${(102 * animation!.value).toInt()}',
+                                                    (userData != null) ? userData!.totalPoints.toString() : '',
                                                     textAlign: TextAlign.center,
                                                     style: const TextStyle(
                                                       fontFamily:
@@ -225,7 +220,7 @@ class MediterranesnDietView extends StatelessWidget {
                                                       const EdgeInsets.only(
                                                           left: 8, bottom: 3),
                                                   child: Text(
-                                                    'Kcal',
+                                                    'Points',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       fontFamily:
@@ -319,9 +314,7 @@ class MediterranesnDietView extends StatelessWidget {
                                             HexColor("#8A98E8"),
                                             HexColor("#8A98E8")
                                           ],
-                                          angle: 140 +
-                                              (360 - 140) *
-                                                  (1.0 - animation!.value)),
+                                          angle: 140 + (360 - 140) * (1.0 - animation!.value)),
                                       child: const SizedBox(
                                         width: 108,
                                         height: 108,
@@ -347,17 +340,17 @@ class MediterranesnDietView extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(
-                          left: 24, right: 24, top: 8, bottom: 16),
+                      padding: const EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 16),
                       child: Row(
                         children: <Widget>[
+
                           Expanded(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 const Text(
-                                  'Carbs',
+                                  'CO2e saved',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontFamily: FitnessAppTheme.fontName,
@@ -400,7 +393,7 @@ class MediterranesnDietView extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(top: 6),
                                   child: Text(
-                                    '12g left',
+                                    (userData != null) ? '${(userData!.totalPoints * 2.518).toStringAsFixed(1)} kg' : '',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontFamily: FitnessAppTheme.fontName,
@@ -414,6 +407,7 @@ class MediterranesnDietView extends StatelessWidget {
                               ],
                             ),
                           ),
+
                           Expanded(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -424,7 +418,7 @@ class MediterranesnDietView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     const Text(
-                                      'Protein',
+                                      'Goal End',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: FitnessAppTheme.fontName,
@@ -440,8 +434,7 @@ class MediterranesnDietView extends StatelessWidget {
                                         height: 4,
                                         width: 70,
                                         decoration: BoxDecoration(
-                                          color: HexColor('#F56E98')
-                                              .withOpacity(0.2),
+                                          color: HexColor('#F56E98').withOpacity(0.2),
                                           borderRadius: const BorderRadius.all(
                                               Radius.circular(4.0)),
                                         ),
@@ -469,7 +462,7 @@ class MediterranesnDietView extends StatelessWidget {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 6),
                                       child: Text(
-                                        '30g left',
+                                        '${timeLeft.inDays} days left',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
@@ -485,6 +478,7 @@ class MediterranesnDietView extends StatelessWidget {
                               ],
                             ),
                           ),
+                          
                           Expanded(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
@@ -495,7 +489,7 @@ class MediterranesnDietView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     const Text(
-                                      'Fat',
+                                      'Rank',
                                       style: TextStyle(
                                         fontFamily: FitnessAppTheme.fontName,
                                         fontWeight: FontWeight.w500,
@@ -540,7 +534,11 @@ class MediterranesnDietView extends StatelessWidget {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 6),
                                       child: Text(
-                                        '10g left',
+                                        (userRank != 0) ?
+                                          (userRank % 10 == 1) ? '${userRank}st' :
+                                          (userRank % 10 == 2) ? '${userRank}nd' :
+                                          (userRank % 10 == 3) ? '${userRank}rd' :
+                                          '${userRank}th' : '',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,

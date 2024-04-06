@@ -1,7 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ing_mobile/configs/firebase_config.dart';
-// import 'package:ing_mobile/models/card.dart';
-// import 'package:ing_mobile/models/transaction.dart';
 
 class UserModel {
   
@@ -9,31 +6,25 @@ class UserModel {
   final String uid; // never null, initialized on register
   final String name; // never null, initialized on register
   final String email; // never null, initialized on register
-  final String? pin; // may be null, initialized with null on register
-  // final CardModel? creditCard; // may be null, initialized with null on register
-  // final CardModel? ecoCard; // may be null, initialized with null on register
-  // final List<TransactionModel> transactions; // never null, initialized with [] (empty list) on register
+  final int totalPoints;
+  final String companyId;
   
   UserModel({
     this.docId,
     required this.uid,
     required this.name,
     required this.email,
-    this.pin,
-    // this.creditCard,
-    // this.ecoCard,
-    // required this.transactions
+    required this.totalPoints,
+    required this.companyId,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      FirebaseUser.uid: uid,
-      FirebaseUser.name: name,
-      FirebaseUser.email: email,
-      FirebaseUser.pin: pin,
-      // 'creditCard': (creditCard != null) ? creditCard!.toMap() : null,
-      // 'ecoCard': (ecoCard != null) ? ecoCard!.toMap() : null,
-      // 'transactions': transactions.map((e) => e.toMap()).toList()
+      'Uid': uid,
+      'Name': name,
+      'Email': email,
+      'TotalPoints': totalPoints,
+      'CompanyId': companyId,
     };
   }
 
@@ -43,13 +34,11 @@ class UserModel {
 
     return UserModel(
       docId: doc.id,
-      uid: data[FirebaseUser.uid],
-      name: data[FirebaseUser.name],
-      email: data[FirebaseUser.email],
-      pin: data[FirebaseUser.pin],
-      // creditCard: CardModel.fromMap(data['creditCard']),
-      // ecoCard: CardModel.fromMap(data['ecoCard']),
-      // transactions: (data['transactions'] as List<Map<String, dynamic>>).map((e) => TransactionModel.fromMap(e)).toList()
+      uid: data['Uid'],
+      name: data['Name'],
+      email: data['Email'],
+      totalPoints: data['TotalPoints'],
+      companyId: data['CompanyId'],
     );
   }
 }

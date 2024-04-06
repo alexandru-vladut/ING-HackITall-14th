@@ -1,37 +1,44 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class TransactionModel {
 
-  final String amount; // never null, initialized on "new transaction"
-  final String senderName; // never null, initialized on "new transaction"
-  final String receiverName; // never null, initialized on "new transaction"
-  final dynamic time; // never null, initialized on "new transaction"
-  final String type; // never null, initialized on "new transaction"
+  final String? docId;
+  final int value;
+  final String userUid;
+  final dynamic timestamp;
+  final String type;
+  final String? voucherId;
 
   TransactionModel({
-    required this.amount,
-    required this.senderName,
-    required this.receiverName,
-    required this.time,
-    required this.type
+    this.docId,
+    required this.value,
+    required this.userUid,
+    required this.timestamp,
+    required this.type,
+    required this.voucherId,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'amount': amount,
-      'senderName': senderName,
-      'receiverName': receiverName,
-      'time': time,
-      'type': type
+      'Value': value,
+      'UserUid': userUid,
+      'Timestamp': timestamp,
+      'Type': type,
+      'VoucherId': voucherId,
     };
   }
 
-  factory TransactionModel.fromMap(Map<String, dynamic> transactionMap) {
+  factory TransactionModel.fromMap(DocumentSnapshot<Map<String, dynamic>> doc) {
+
+    Map data = doc.data()!;
 
     return TransactionModel(
-      amount: transactionMap['amount'],
-      senderName: transactionMap['senderName'],
-      receiverName: transactionMap['receiverName'],
-      time: transactionMap['time'],
-      type: transactionMap['type']
+      docId: doc.id,
+      value: data['Value'],
+      userUid: data['UserUid'],
+      timestamp: data['Timestamp'],
+      type: data['Type'],
+      voucherId: data['VoucherId'],
     );
   }
 }

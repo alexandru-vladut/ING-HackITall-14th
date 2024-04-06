@@ -144,13 +144,7 @@ class SignInState extends State<SignIn> {
                             },
                             onFieldSubmitted: (_) {
                               if (_formKey.currentState!.validate()) {
-                                if (emailVerificationEnabled) {
-                                  signUserIn(context, loginEmailController.text, loginPasswordController.text);
-                                } else if (pinEnabled) {
-                                  signUserInWithoutEmailVerification(context, loginEmailController.text, loginPasswordController.text);
-                                } else {
-                                  signUserInWithoutEmailVerificationAndPin(context, loginEmailController.text, loginPasswordController.text);
-                                }
+                                signUserIn(context, loginEmailController.text, loginPasswordController.text);
                               } else {
                                 setState(() {
                                   containerHeight = 190;
@@ -184,13 +178,7 @@ class SignInState extends State<SignIn> {
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        if (emailVerificationEnabled) {
-                          signUserIn(context, loginEmailController.text, loginPasswordController.text);
-                        } else if (pinEnabled) {
-                          signUserInWithoutEmailVerification(context, loginEmailController.text, loginPasswordController.text);
-                        } else {
-                          signUserInWithoutEmailVerificationAndPin(context, loginEmailController.text, loginPasswordController.text);
-                        }
+                        signUserIn(context, loginEmailController.text, loginPasswordController.text);
                       } else {
                         setState(() {
                           containerHeight = 190;
@@ -257,14 +245,14 @@ class SignInState extends State<SignIn> {
                                   hintText: "Email",
                                   isOutlineInputBorderColor: kBlackColor,
                                   onFieldSubmitted: (_) {
-                                    sendPasswordResetEmail(context, forgotController.text);
+                                    // sendPasswordResetEmail(context, forgotController.text);
                                   },
                                 ),
                               ),
           
                               GestureDetector(
                                 onTap: () {
-                                  sendPasswordResetEmail(context, forgotController.text);
+                                  // sendPasswordResetEmail(context, forgotController.text);
                                 },
                                 child: Align(
                                   alignment: Alignment.centerRight,

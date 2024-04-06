@@ -1,15 +1,56 @@
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ing_mobile/configs/constants.dart';
 import 'package:ing_mobile/configs/products.dart';
+import 'package:ing_mobile/features/bottom_navigation_bar.dart';
+import 'package:ing_mobile/models/transaction.dart';
+import 'package:ing_mobile/utilities/animation/slideleft_toright.dart';
 
-
-class ScanProductResultPage extends StatelessWidget {
-  const ScanProductResultPage({super.key, required this.barcode});
+class ScanProductResultPage extends StatefulWidget {
   final String barcode;
+  const ScanProductResultPage({super.key, required this.barcode});
+
+  @override
+  _ScanProductResultPageState createState() => _ScanProductResultPageState();
+}
+
+class _ScanProductResultPageState extends State<ScanProductResultPage> {
+
+  final user = FirebaseAuth.instance.currentUser!;
+
+  void recycleNow(BuildContext context) async {
+
+    loadingDialog(context);
+
+    final userCollection = await FirebaseFirestore.instance.collection('Users').where('Uid', isEqualTo: user.uid).get();
+    final userDoc = userCollection.docs[0];
+
+    int totalPoints = userDoc.get('TotalPoints');
+    int newPoints = products[widget.barcode]!['points'];
+    totalPoints += newPoints;
+
+    await userCollection.docs.first.reference.update({'TotalPoints': totalPoints});
+
+    TransactionModel transaction = TransactionModel(
+      value: newPoints,
+      userUid: user.uid,
+      timestamp: DateTime.now(),
+      type: 'recycle product',
+      voucherId: null,
+    );
+
+    await FirebaseFirestore.instance.collection('Transactions').add(transaction.toMap());
+
+    Navigator.push(context, SlideLeftToRight(page: const BottomNavBar()));
+  }
 
   @override
   Widget build(BuildContext context) {
 
-    final product = products[barcode];
+    final product = products[widget.barcode];
 
     Color lightGreen = const Color.fromARGB(255, 99, 210, 102);
     Color darkGreen = const Color.fromARGB(255, 83, 161, 86);
@@ -26,7 +67,6 @@ class ScanProductResultPage extends StatelessWidget {
       lightColor = lightGreen;
       darkColor = darkGreen;
     }
-
 
     return Scaffold(
       appBar: AppBar(
@@ -221,7 +261,7 @@ class ScanProductResultPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     child: GestureDetector(
                       onTap: () {
-                        // to do
+                        recycleNow(context);
                       },
                       child: Container(
                         color: darkColor,
@@ -229,7 +269,7 @@ class ScanProductResultPage extends StatelessWidget {
                         height: 60,
                         alignment: Alignment.center,
                         child: const Text(
-                          'Recylce Now',
+                          'Recycle Now',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

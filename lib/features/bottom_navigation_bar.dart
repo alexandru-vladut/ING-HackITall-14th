@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ing_mobile/features/activities/log_activity.dart';
 import 'package:ing_mobile/features/home_page.dart';
-import 'package:ing_mobile/features/new_home_page/new_home_page.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -26,10 +25,10 @@ class _BottomNavBarState extends State<BottomNavBar> with TickerProviderStateMix
 
     setState(() {
       widgetOptions = <Widget>[
-        const HomePage(),
+        HomePage(animationController: animationController),
         const LogActivityPage(),
-        MyDiaryScreen(animationController: animationController),
-        const HomePage()
+        const LogActivityPage(),
+        const LogActivityPage(),
       ];
     });
     

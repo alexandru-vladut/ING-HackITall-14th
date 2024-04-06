@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:ing_mobile/configs/constants.dart';
-import 'package:ing_mobile/features/authentication/firebase_methods.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -243,13 +241,7 @@ class SignUpState extends State<SignUp> {
                             },
                             onFieldSubmitted: (_) {
                               if (_formKey.currentState!.validate()) {
-                                if (emailVerificationEnabled) {
-                                  signUserUp(context, signupEmailController.text, signupNumeController.text, signupPasswordController.text, signupConfirmPasswordController.text);
-                                } else if (pinEnabled) {
-                                  signUserUpWithoutEmailVerification(context, signupEmailController.text, signupNumeController.text, signupPasswordController.text, signupConfirmPasswordController.text);
-                                } else {
-                                  signUserUpWithoutEmailVerificationAndPin(context, signupEmailController.text, signupNumeController.text, signupPasswordController.text, signupConfirmPasswordController.text);
-                                }
+                                // signUserUp(context, signupEmailController.text, signupNumeController.text, signupPasswordController.text, signupConfirmPasswordController.text);
                                 
                               } else {
                                 setState(() {
@@ -284,13 +276,7 @@ class SignUpState extends State<SignUp> {
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        if (emailVerificationEnabled) {
-                          signUserUp(context, signupEmailController.text, signupNumeController.text, signupPasswordController.text, signupConfirmPasswordController.text);
-                        } else if (pinEnabled) {
-                          signUserUpWithoutEmailVerification(context, signupEmailController.text, signupNumeController.text, signupPasswordController.text, signupConfirmPasswordController.text);
-                        } else {
-                          signUserUpWithoutEmailVerificationAndPin(context, signupEmailController.text, signupNumeController.text, signupPasswordController.text, signupConfirmPasswordController.text);
-                        }
+                        // signUserUp(context, signupEmailController.text, signupNumeController.text, signupPasswordController.text, signupConfirmPasswordController.text);
                       } else {
                         setState(() {
                           containerHeight = 325; // 380
