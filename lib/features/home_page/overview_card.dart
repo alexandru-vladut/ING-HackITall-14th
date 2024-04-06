@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:ing_mobile/configs/constants.dart';
 import 'dart:math' as math;
 
-import 'package:ing_mobile/features/new_home_page/fitness_app_theme.dart';
+import 'package:ing_mobile/features/home_page/fitness_app_theme.dart';
 import 'package:ing_mobile/models/user.dart';
 
 class OverviewCard extends StatelessWidget {
   final AnimationController? animationController;
   final Animation<double>? animation;
   final int thisMonthPoints;
+  final int thisMonthPercentage;
   final int userRank;
   final UserModel? userData;
 
   const OverviewCard(
-      {Key? key, this.animationController, this.animation, required this.thisMonthPoints, this.userData, required this.userRank})
+      {Key? key, this.animationController, this.animation, required this.thisMonthPoints, this.userData, required this.userRank, required this.thisMonthPercentage})
       : super(key: key);
 
   @override
@@ -276,7 +277,7 @@ class OverviewCard extends StatelessWidget {
                                             CrossAxisAlignment.center,
                                         children: <Widget>[
                                           Text(
-                                            '${(1503 * animation!.value).toInt()}',
+                                            (thisMonthPercentage != -1) ? "$thisMonthPercentage%" : '',
                                             textAlign: TextAlign.center,
                                             style: const TextStyle(
                                               fontFamily:
@@ -289,7 +290,7 @@ class OverviewCard extends StatelessWidget {
                                             ),
                                           ),
                                           Text(
-                                            'Kcal left',
+                                            'Goal Met',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontFamily:
@@ -314,7 +315,7 @@ class OverviewCard extends StatelessWidget {
                                             HexColor("#8A98E8"),
                                             HexColor("#8A98E8")
                                           ],
-                                          angle: 140 + (360 - 140) * (1.0 - animation!.value)),
+                                          angle: (thisMonthPercentage != -1) ? (3.6 * thisMonthPercentage) + (360 - (3.6 * thisMonthPercentage)) * (1.0 - animation!.value) : 360 * (1.0 - animation!.value)),
                                       child: const SizedBox(
                                         width: 108,
                                         height: 108,

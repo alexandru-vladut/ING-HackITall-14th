@@ -1,7 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cool_alert/cool_alert.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:ing_mobile/features/activities/recycle/scan_product_result.dart';
+import 'package:ing_mobile/utilities/animation/slideright_toleft.dart';
 import 'package:logger/logger.dart';
 
 class HexColor extends Color {
@@ -10,11 +13,27 @@ class HexColor extends Color {
   static int _getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll('#', '');
     if (hexColor.length == 6) {
-      hexColor = 'FF' + hexColor;
+      hexColor = 'FF$hexColor';
     }
     return int.parse(hexColor, radix: 16);
   }
 }
+
+Future<void> scanBarcode(BuildContext context) async {
+    String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+      '#ff6666', // Line color
+      'Cancel', // Cancel button text
+      true, // Show flash icon
+      ScanMode.BARCODE, // Scan mode
+    );
+
+    if (barcodeScanRes == '59489184' || barcodeScanRes == '5948918') {
+      Navigator.push(context, SlideRightToLeft(page: ScanProductResultPage(barcode: barcodeScanRes)));
+    } else {
+      scanBarcode(context);
+    }
+    
+  }
 
 String appName = 'ing-mobile';
 bool emailVerificationEnabled = false;
@@ -80,75 +99,3 @@ const kOragneColor = Color(0xFFFF633E);
 const kRedColor = Color(0xFFF15249);
 const kWhiteLightColor = Color(0xFFFCFCFC);
 const kGreyLightColor = Color(0xFFD9D9D9);
-
-Map vendorLogo = {
-  'Carrefour': 'assets/vendor_logos/carrefour.png',
-  'Nike': 'assets/vendor_logos/nike.png',
-  'Starbucks': 'assets/vendor_logos/starbucks.png',
-  'IKEA': 'assets/vendor_logos/ikea.png',
-  'H&M': 'assets/vendor_logos/hm.png',
-  
-  'Asociaţia Copacul de Hârtie': 'assets/env/a1.png',
-  'Asociaţia Sudcarpatica': 'assets/env/a2.png',
-  'Asociaţia Ecosophia': 'assets/env/a4.png',
-  'Asociaţia Slow Food': 'assets/env/a3.png',
-  'Asociaţia Rara Avis': 'assets/env/a1.png',
-  'Asociaţia EcoLogic': 'assets/env/a2.png',
-  };
-
-Map envLogo = {
-  'Asociaţia Copacul de Hârtie': 'assets/env/a1.png',
-  'Asociaţia Sudcarpatica': 'assets/env/a2.png',
-  'Asociaţia Ecosophia': 'assets/env/a4.png',
-  'Asociaţia Slow Food': 'assets/env/a3.png',
-  'Asociaţia Rara Avis': 'assets/env/a1.png',
-  'Asociaţia EcoLogic': 'assets/env/a2.png',
-};
-
-void getUserDetails(User user, List<String> userDetails, List<String> fields, Function() onCompletion) async {
-
-  final userCollection = await FirebaseFirestore.instance.collection('users').where('UID', isEqualTo: user.uid).get();
-  final userDoc = userCollection.docs[0];
-
-  for (int i = 0; i < userDetails.length; i++) {
-    userDetails[i] = userDoc.get(fields[i]).toString();
-  }
-
-  onCompletion();
-}
-
-void getCreditCardDetails(User user, List<String> creditCardDetails, List<bool> hasCard, Function() onCompletion) async {
-
-  final userCollection = await FirebaseFirestore.instance.collection('users').where('UID', isEqualTo: user.uid).get();
-  final userDoc = userCollection.docs[0];
-
-  if (userDoc.get("creditCard") == null) {
-    hasCard[0] = false;
-  } else {
-    hasCard[0] = true;
-    creditCardDetails[0] = userDoc.get("creditCard")["cvv"].toString();
-    creditCardDetails[1] = userDoc.get("creditCard")["expirationDate"].toString();
-    creditCardDetails[2] = userDoc.get("creditCard")["name"].toString();
-    creditCardDetails[3] = userDoc.get("creditCard")["number"].toString();
-    creditCardDetails[4] = userDoc.get("creditCard")["type"].toString();
-    creditCardDetails[5] = userDoc.get("creditCard")["sold"].toString();
-  }
-
-  onCompletion();
-}
-
-void getEcoCardDetails(User user, List<String> ecoCardDetails, Function() onCompletion) async {
-
-  final userCollection = await FirebaseFirestore.instance.collection('users').where('UID', isEqualTo: user.uid).get();
-  final userDoc = userCollection.docs[0];
-
-  if (userDoc.get("ecoCard") != null) {
-    ecoCardDetails[0] = userDoc.get("ecoCard")["cvv"].toString();
-    ecoCardDetails[1] = userDoc.get("ecoCard")["expirationDate"].toString();
-    ecoCardDetails[2] = userDoc.get("ecoCard")["name"].toString();
-    ecoCardDetails[3] = userDoc.get("ecoCard")["number"].toString();
-    ecoCardDetails[4] = userDoc.get("ecoCard")["sold"].toString();
-  }
-
-  onCompletion();
-}

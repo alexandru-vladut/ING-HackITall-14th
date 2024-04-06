@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ing_mobile/features/activities/log_activity.dart';
-import 'package:ing_mobile/features/home_page.dart';
+import 'package:ing_mobile/features/activities/test_page.dart';
+import 'package:ing_mobile/features/home_page/home_page.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -26,9 +26,9 @@ class _BottomNavBarState extends State<BottomNavBar> with TickerProviderStateMix
     setState(() {
       widgetOptions = <Widget>[
         HomePage(animationController: animationController),
-        const LogActivityPage(),
-        const LogActivityPage(),
-        const LogActivityPage(),
+        const TestPage(),
+        const TestPage(),
+        const TestPage(),
       ];
     });
     
@@ -40,13 +40,6 @@ class _BottomNavBarState extends State<BottomNavBar> with TickerProviderStateMix
     animationController?.dispose();
     super.dispose();
   }
-
-  // static final List<Widget> _widgetOptions = <Widget>[
-  //   const HomePage(),
-  //   const LogActivityPage(),
-  //   MyDiaryScreen(animationController: animationController),
-  //   const HomePage()
-  // ];
 
   void _onItemTapped(int index) {
     setState(() {

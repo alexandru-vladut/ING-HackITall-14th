@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ing_mobile/features/new_home_page/fitness_app_theme.dart';
+import 'package:ing_mobile/features/home_page/fitness_app_theme.dart';
 
 class TitleView extends StatelessWidget {
 

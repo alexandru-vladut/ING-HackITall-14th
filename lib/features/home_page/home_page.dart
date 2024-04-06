@@ -1,12 +1,12 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ing_mobile/features/new_home_page/fitness_app_theme.dart';
-import 'package:ing_mobile/features/new_home_page/meals_list_view.dart';
-import 'package:ing_mobile/features/new_home_page/overview_card.dart';
-import 'package:ing_mobile/features/new_home_page/title_view.dart';
+import 'package:ing_mobile/features/home_page/fitness_app_theme.dart';
+import 'package:ing_mobile/features/home_page/action_card.dart';
+import 'package:ing_mobile/features/home_page/overview_card.dart';
+import 'package:ing_mobile/features/home_page/title_view.dart';
 import 'package:ing_mobile/models/user.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   final user = FirebaseAuth.instance.currentUser!;
   int thisMonthPoints = -1;
+  int thisMonthPercentage = -1;
   int userRank = 0;
   UserModel? userData;
 
@@ -28,7 +29,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    print('initState() called with userData.name ${userData?.name}');
     addAllListData();
     getUserData();
     getThisMonthPoints();
@@ -42,12 +42,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     userData = UserModel.fromDocumentSnapshot(userDoc);
 
+    // --------------------------------------------------------------------------------------
+
     // Reference to Firestore collection
     CollectionReference users = FirebaseFirestore.instance.collection('Users');
 
     // Query to get users in the same company, ordered by totalPoints
     QuerySnapshot querySnapshot = await users
         .where('CompanyId', isEqualTo: userData!.companyId)
+        .where('Role', isNotEqualTo: 'Admin')
         .orderBy('TotalPoints', descending: true)
         .get();
 
@@ -61,6 +64,35 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
 
     userRank = rank;
+
+    // --------------------------------------------------------------------------------------
+
+    // Calculate the start of the current month
+    DateTime startOfCurrentMonth = DateTime(DateTime.now().year, DateTime.now().month, 1);
+
+    // Query Firestore
+    var querySnapshotAgain = await FirebaseFirestore.instance
+        .collection('Transactions')
+        .where('UserUid', isEqualTo: user.uid)
+        .where('Timestamp', isGreaterThanOrEqualTo: Timestamp.fromDate(startOfCurrentMonth))
+        .get();
+
+    int thisMonthPointsAgain = 0;
+    // Summing the 'amount' fields
+    for (var doc in querySnapshotAgain.docs) {
+      var data = doc.data();
+      int value = data['Value'];
+      if (value > 0) {
+        thisMonthPointsAgain += value;
+      }
+    }
+
+    CollectionReference collection = FirebaseFirestore.instance.collection('Companies');
+    DocumentSnapshot documentSnapshot = await collection.doc(userData!.companyId).get();
+    int goalPoints = documentSnapshot.get('Points Goal');
+
+    thisMonthPercentage = ((thisMonthPointsAgain / goalPoints) * 100).toInt();
+
     listViews = <Widget>[];
     addAllListData();
     setState(() {});
@@ -153,6 +185,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           thisMonthPoints: thisMonthPoints,
           userData: userData,
           userRank: userRank,
+          thisMonthPercentage: thisMonthPercentage,
         ),
       ),
     );
@@ -168,7 +201,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
 
     listViews.add(
-      MealsListView(
+      ActionCard(
         mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve: const Interval((1 / count) * 3, 1.0, curve: Curves.fastOutSlowIn))),
@@ -180,8 +213,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-
-    print('build() called with userData.name ${userData?.name}');
 
     return Container(
       color: FitnessAppTheme.background,
