@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ing_mobile/features/activities/test_page.dart';
 import 'package:ing_mobile/features/home_page/home_page.dart';
 import 'package:ing_mobile/features/leaderboard/leaderboard_page.dart';
+import 'package:ing_mobile/features/profile/profile.dart';
+import 'package:ing_mobile/features/vouchers/vouchers_page.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -27,9 +28,9 @@ class _BottomNavBarState extends State<BottomNavBar> with TickerProviderStateMix
     setState(() {
       widgetOptions = <Widget>[
         HomePage(animationController: animationController),
-        const TestPage(),
+        const VouchersPage(),
         const LeaderboardPage(),
-        const TestPage(),
+        const Profile()
       ];
     });
     
@@ -55,6 +56,7 @@ class _BottomNavBarState extends State<BottomNavBar> with TickerProviderStateMix
         child: widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        iconSize: 30,
         backgroundColor: Colors.white, // Repository.navbarColor(context),
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -68,11 +70,11 @@ class _BottomNavBarState extends State<BottomNavBar> with TickerProviderStateMix
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add_shopping_cart),
-            label: 'Wallet',
+            icon: Icon(Icons.redeem_rounded),
+            label: 'Marketplace',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.leaderboard), // Icon(IconlyBold.Chart),
+            icon: Icon(Icons.leaderboard_rounded), // Icon(IconlyBold.Chart),
             label: 'Leaderboard',
           ),
           BottomNavigationBarItem(

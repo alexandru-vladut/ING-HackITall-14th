@@ -135,34 +135,48 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       Padding(
         padding: const EdgeInsets.only(left: 24, bottom: 20),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              'Hi, ',
-              style: TextStyle(
-                color: const Color.fromARGB(255, 32, 32, 32).withOpacity(0.7),
-                fontSize: 35,
-              )
+            Row(
+              children: [
+                Text(
+                  'Hi, ',
+                  style: TextStyle(
+                    color: const Color.fromARGB(255, 32, 32, 32).withOpacity(0.7),
+                    fontSize: 35,
+                  )
+                ),
+                Text(
+                  (userData != null) ? userData!.name : '',
+                  style: TextStyle(
+                    color: const Color.fromARGB(255, 32, 32, 32).withOpacity(0.7),
+                    fontSize: 35,
+                    fontWeight: FontWeight.bold,
+                  )
+                ),
+                Text(
+                  '.',
+                  style: TextStyle(
+                    color: const Color.fromARGB(255, 32, 32, 32).withOpacity(0.7),
+                    fontSize: 35,
+                  )
+                ),
+              ],
             ),
-            Text(
-              (userData != null) ? userData!.name : '',
-              style: TextStyle(
-                color: const Color.fromARGB(255, 32, 32, 32).withOpacity(0.7),
-                fontSize: 35,
-                fontWeight: FontWeight.bold,
-              )
-            ),
-            Text(
-              '.',
-              style: TextStyle(
-                color: const Color.fromARGB(255, 32, 32, 32).withOpacity(0.7),
-                fontSize: 35,
-              )
-            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: (userData != null) ?
+                Image.asset(
+                  (userData!.companyId == 'J0GXJTo3gDu05f31FA7J') ? 'assets/images/singleton.png' : 'assets/images/technova.png',
+                  width: 200,
+                )
+                : const SizedBox(),
+            )
           ],
         ),
       ),
     );
-
+    
     listViews.add(
       TitleView(
         titleTxt: 'Overview',

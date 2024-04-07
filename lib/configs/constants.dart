@@ -27,7 +27,7 @@ Future<void> scanBarcode(BuildContext context) async {
       ScanMode.BARCODE, // Scan mode
     );
 
-    if (barcodeScanRes == '59489184' || barcodeScanRes == '5948918') {
+    if (barcodeScanRes == '59489184' || barcodeScanRes == '59492573') {
       Navigator.push(context, SlideRightToLeft(page: ScanProductResultPage(barcode: barcodeScanRes)));
     } else {
       scanBarcode(context);

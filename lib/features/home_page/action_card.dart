@@ -2,8 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:ing_mobile/configs/constants.dart';
+import 'package:ing_mobile/features/calendar/calendar_page.dart';
+import 'package:ing_mobile/features/challenges/challenges_page.dart';
 import 'package:ing_mobile/features/home_page/fitness_app_theme.dart';
 import 'package:ing_mobile/features/home_page/action_list_data.dart';
+import 'package:ing_mobile/utilities/animation/slideright_toleft.dart';
 
 
 class ActionCard extends StatefulWidget {
@@ -104,6 +107,10 @@ class ActionsView extends StatelessWidget {
                 String title = actionListData!.titleTxt;
                 if (title == 'Recycle') {
                   scanBarcode(context);
+                } else if (title == 'Work') {
+                  Navigator.push(context, SlideRightToLeft(page: const CalendarPage()));
+                } else if (title == 'Challenges') {
+                  Navigator.push(context, SlideRightToLeft(page: const ChallengesPage()));
                 }
               },
               child: SizedBox(
@@ -136,7 +143,7 @@ class ActionsView extends StatelessWidget {
                           ),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 54, left: 16, right: 16, bottom: 8),
+                          padding: const EdgeInsets.only(top: 54, left: 16, right: 10, bottom: 8),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,7 +155,7 @@ class ActionsView extends StatelessWidget {
                                 style: const TextStyle(
                                   fontFamily: FitnessAppTheme.fontName,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 20,
+                                  fontSize: 17,
                                   letterSpacing: 0.2,
                                   color: FitnessAppTheme.white,
                                 ),

@@ -44,8 +44,8 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
           decoration: const BoxDecoration(
             gradient: LinearGradient(
                 colors: <Color>[
-                  Color.fromARGB(255, 34, 82, 255),
-                  Color.fromARGB(255, 0, 4, 106)
+                  Color.fromARGB(255, 34, 148, 255),
+                  Color.fromARGB(255, 0, 44, 106)
                 ],
                 begin: FractionalOffset(0.0, 0.0),
                 end: FractionalOffset(1.0, 1.0),
@@ -60,7 +60,7 @@ class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixi
                 child: Image(
                     height: MediaQuery.of(context).size.height > 800 ? 191.0 : 150,
                     fit: BoxFit.contain,
-                    image: const AssetImage('assets/images/marealb.png')),
+                    image: const AssetImage('assets/images/singleton_white.png')),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
