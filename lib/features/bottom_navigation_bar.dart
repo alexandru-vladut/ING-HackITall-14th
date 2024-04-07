@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ing_mobile/features/activities/test_page.dart';
 import 'package:ing_mobile/features/home_page/home_page.dart';
+import 'package:ing_mobile/features/leaderboard/leaderboard_page.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class _BottomNavBarState extends State<BottomNavBar> with TickerProviderStateMix
       widgetOptions = <Widget>[
         HomePage(animationController: animationController),
         const TestPage(),
-        const TestPage(),
+        const LeaderboardPage(),
         const TestPage(),
       ];
     });
@@ -71,8 +72,8 @@ class _BottomNavBarState extends State<BottomNavBar> with TickerProviderStateMix
             label: 'Wallet',
           ),
           BottomNavigationBarItem(
-            icon: Icon(IconData(0xe923, fontFamily: 'IconlyBold')), // Icon(IconlyBold.Chart),
-            label: 'Stats',
+            icon: Icon(Icons.leaderboard), // Icon(IconlyBold.Chart),
+            label: 'Leaderboard',
           ),
           BottomNavigationBarItem(
             icon: Icon(IconData(0xe94b, fontFamily: 'IconlyBold')), // Icon(IconlyBold.Profile),

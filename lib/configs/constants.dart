@@ -39,6 +39,18 @@ String appName = 'ing-mobile';
 bool emailVerificationEnabled = false;
 bool pinEnabled = false;
 
+List memojiPaths = [
+  'assets/memoji/1.png',
+  'assets/memoji/2.png',
+  'assets/memoji/3.png',
+  'assets/memoji/4.png',
+  'assets/memoji/5.png',
+  'assets/memoji/6.png',
+  'assets/memoji/7.png',
+  'assets/memoji/8.png',
+  'assets/memoji/9.png',
+];
+
 const Color mainColor = Color(0xFF000089);
 
 var logger = Logger(printer: PrettyPrinter(),);

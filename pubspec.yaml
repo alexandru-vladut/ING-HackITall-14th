@@ -79,6 +79,7 @@ flutter:
     - assets/vendor_logos/
     - assets/env/
     - assets/fitness_app/
+    - assets/leaderboard/
 
   fonts:
     - family: DMSans

@@ -51,6 +51,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     QuerySnapshot querySnapshot = await users
         .where('CompanyId', isEqualTo: userData!.companyId)
         .where('Role', isNotEqualTo: 'Admin')
+        .orderBy('Role')
         .orderBy('TotalPoints', descending: true)
         .get();
 
@@ -127,8 +128,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   void addAllListData() {
-
-    print('addAllListData() called with userData.name ${userData?.name}');
 
     const int count = 5;
 

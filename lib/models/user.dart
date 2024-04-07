@@ -8,6 +8,7 @@ class UserModel {
   final String email; // never null, initialized on register
   final int totalPoints;
   final String companyId;
+  final String role;
   
   UserModel({
     this.docId,
@@ -16,6 +17,7 @@ class UserModel {
     required this.email,
     required this.totalPoints,
     required this.companyId,
+    required this.role,
   });
 
   Map<String, dynamic> toMap() {
@@ -25,6 +27,7 @@ class UserModel {
       'Email': email,
       'TotalPoints': totalPoints,
       'CompanyId': companyId,
+      'Role': role,
     };
   }
 
@@ -39,6 +42,22 @@ class UserModel {
       email: data['Email'],
       totalPoints: data['TotalPoints'],
       companyId: data['CompanyId'],
+      role: data['Role'],
+    );
+  }
+
+  factory UserModel.fromQueryDocumentSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> doc) {
+    
+    Map data = doc.data();
+
+    return UserModel(
+      docId: doc.id,
+      uid: data['Uid'],
+      name: data['Name'],
+      email: data['Email'],
+      totalPoints: data['TotalPoints'],
+      companyId: data['CompanyId'],
+      role: data['Role'],
     );
   }
 }
